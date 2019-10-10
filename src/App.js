@@ -10,7 +10,7 @@ import { positions, transitions, types } from 'react-alert'
  
  const App = () => {
   const alert = useAlert()
-  console.log('alert-app', alert)
+  //console.log('alert-app', alert)
       return (
     <div style={{
       display: 'flex',

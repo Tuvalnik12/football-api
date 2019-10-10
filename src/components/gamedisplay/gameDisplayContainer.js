@@ -4,7 +4,9 @@ import Container from '@material-ui/core/Container';
 import CardList from './gameCard/cardList'
 import CurrentChoice from './currentchoice/CurrentChoice'
 
-export default function gameDisplayContainer({alert, hasMenuChanged, matches, league, fixture, isPrams}) {
+export default function gameDisplayContainer({
+  alert, hasMenuChanged, matches, league, fixture, isPrams,area
+}) {
   //console.log('hasMenuChanged', {hasMenuChanged})
     if (hasMenuChanged == true) {
       return (    
@@ -18,7 +20,8 @@ export default function gameDisplayContainer({alert, hasMenuChanged, matches, le
         <CssBaseline />
         <CurrentChoice 
         league={league}
-        fixture={fixture}/>
+        fixture={fixture}
+        area={area}/>
         <CardList matches={matches} />    
       </Container>
       )

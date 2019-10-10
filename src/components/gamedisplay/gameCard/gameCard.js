@@ -10,7 +10,8 @@ const useStyles = makeStyles({
   card: {
     justifyContent: 'center',
     textAlign: 'center',
-    margin: '1%'
+    margin: '1%',
+    padding: "1em"
   },
 });
 
@@ -24,7 +25,7 @@ export default function GameCard(props) {
       {props.homeTeam} - {props.awayTeam}
         </Typography>
       </CardContent>
-      <CardActions 
+{/*      <CardActions 
       style={{
         justifyContent: 'center'
       }}>
@@ -32,6 +33,6 @@ export default function GameCard(props) {
         size="small"
         >Learn More</Button>
       </CardActions>
-    </Card>
+*/}    </Card>
   );
 }

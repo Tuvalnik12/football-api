@@ -10,7 +10,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function CurrentChoice({ league, fixture }) {
+export default function CurrentChoice({ league, fixture, area }) {
   const classes = useStyles();
 
   return (
@@ -20,7 +20,7 @@ export default function CurrentChoice({ league, fixture }) {
     }}>
 		<Paper className={classes.root}>
 			<Typography variant="h6" component="h3">
-			   {league}
+			   {league} - {area}
 			</Typography>
 		</Paper>
 		<Paper className={classes.root}>

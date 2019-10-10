@@ -37,8 +37,8 @@ export default function DialogSelect({handleNoEntry, competitions, handleMenuCha
   const handleChangeLeague = (event) => {
     setState({...state, 
       league: event.target.value.name,
-  //    competitionId: event.target.value.id,
-//      area: event.target.value.area
+      competitionId: event.target.value.id,
+      area: event.target.value.area
       });
      console.log('event', event.target)
      console.log('renen', state.league)

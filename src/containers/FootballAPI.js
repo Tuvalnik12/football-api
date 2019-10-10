@@ -27,7 +27,7 @@ class FootballAPI extends Component {
 
 	componentDidMount() {
 		this.getCompetiotionsRaw();
-		console.log('alert-API', alert)
+		//console.log('alert-API', alert)
 	}
 
 	async getCompetiotionsRaw() {
@@ -99,7 +99,7 @@ class FootballAPI extends Component {
 
 		await this.getCompititionFixtures();
 		} else {
-			console.log('alert-function', alert)
+			//console.log('alert-function', alert)
 			return alert('You shall not pass! please fill the form!')
 		}
 	}
@@ -123,12 +123,12 @@ class FootballAPI extends Component {
 			}
 		})
 
-		const err = await (error => console.log('you must choose league and fixture')) 
+		const err = await (error => console.log('oh no!')) 
 		this.setState(() => {
 			return {matches: fixture}
 			}
 		)
-		//console.log('state - matches', this.state.matches)
+		console.log('state - matches', this.state.matches)
 		this.hideLoader();
 		}
 
@@ -167,7 +167,8 @@ class FootballAPI extends Component {
 					league={this.state.league}
 					matches={this.state.matches}
 					fixture={this.state.fixture} 
-					hasMenuChanged={this.state.hasMenuChanged} />
+					hasMenuChanged={this.state.hasMenuChanged}
+					area={this.state.area} />
 				</div>
 			)}
 			}
