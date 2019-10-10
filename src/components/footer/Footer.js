@@ -1,33 +1,13 @@
-import React from 'react';
-import Box from '@material-ui/core/Box';
+import React from "react";
+import "./Footer.css";
 
 const Footer = () => {
 	return (
-		<footer
-		style={{
-			flexShrink: '0',
-			zIndex: '-1',
-			position: 'absolute',
-			bottom: '0px',
-			width: '100%',
-			backgroundColor: '#FF8855',
-			display: 'flex',
-			justifyContent: 'space-around',
-			alignItems: 'baseline',
-			textAlign: 'center',
-			clear: 'both'
-			}}>
-			<h1
-			style={{
-				fontSize: '3em',
-				fontFamily: 'Reenie Beanie'
-			}}> FutSTAT </h1>
-			<p
-			style={{
-				fontWeight: 'bold'
-			}}>Powered by Tal Milecki</p>
+		<footer className="footer">
+			<h1 className="footer__title">FutSTAT</h1>
+			<p className="footer__powered-by">Powered by Tal Milecki</p>
 		</footer>
-	)
-}
+	);
+};
 
 export default Footer;

@@ -1,0 +1,24 @@
+.dialog__select__container {
+	display: grid;
+	grid-column: 2/3;
+	margin-top: 2%;
+	margin-bottom: 2%;
+	justify-content: center;
+}
+
+.dialog__button.dialog__button {
+	background-color: #d46a6a;
+}
+
+.form__container {
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-around;
+	align-items: center;
+	margin: 5%;
+}
+
+.form__control.form__control.form__control {
+	margin: .5em;
+	min-width: 120px;
+}

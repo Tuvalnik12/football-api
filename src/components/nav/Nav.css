@@ -1,0 +1,9 @@
+.header {
+	background-color: #801515;
+}
+
+.header__title.header__title {
+	font-size: 3em;
+	font-family: Reenie Beanie;
+	text-shadow: 2px 2px 2px #aaa;
+}

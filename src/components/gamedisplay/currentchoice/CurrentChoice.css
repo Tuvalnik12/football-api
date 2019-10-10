@@ -1,0 +1,9 @@
+.current-choice__container {
+	display: flex;
+	justify-content: center;
+}
+
+.current-choice__title {
+	padding: 1em;
+    margin: 2%;
+}

@@ -1,34 +1,21 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    padding: theme.spacing(3, 5),
-    margin: '2%'
-  },
-}));
+import React from "react";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import "./CurrentChoice.css";
 
 export default function CurrentChoice({ league, fixture, area }) {
-  const classes = useStyles();
-
   return (
-    <div style={{
-    	display: 'flex',
-    	justifyContent: 'center'
-    }}>
-		<Paper className={classes.root}>
-			<Typography variant="h6" component="h3">
-			   {league} - {area}
-			</Typography>
-		</Paper>
-		<Paper className={classes.root}>
-			<Typography variant="h6" component="h3">
-			  Fixture - {fixture}
-			</Typography>
-		</Paper>
-		   
+    <div className="current-choice__container">
+      <Paper className="current-choice__title">
+        <Typography variant="h6" component="h3">
+          {league} - {area}
+        </Typography>
+      </Paper>
+      <Paper className="current-choice__title">
+        <Typography variant="h6" component="h3">
+          Fixture: {fixture}
+        </Typography>
+      </Paper>
     </div>
   );
 }
