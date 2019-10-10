@@ -15,6 +15,7 @@ class FootballAPI extends Component {
 		competitionId: 0,
 		matches: [],
 		circularIndeterminate: false,
+		isLoading: false,
 		hasMenuChanged: false,
 		isPrams: true,
 		alert: alert
@@ -27,7 +28,7 @@ class FootballAPI extends Component {
 	async getCompetiotionsRaw() {
 		const rawCompetitions = [];
 		const competitions = [];
-		await this.showLoader();
+		await this.toggleLoader();
 		const request = await fetch(
 			"http://api.football-data.org/v2/competitions",
 			{
@@ -51,15 +52,13 @@ class FootballAPI extends Component {
 		});
 		this.setState({ competitions: competitions });
 		const err = await (err => console.log(err, "err"));
-		await this.hideLoader();
+		await this.toggleLoader();
 	}
 
-	hideLoader = () => {
-		this.setState({ circularIndeterminate: false });
-	};
-
-	showLoader = () => {
-		this.setState({ circularIndeterminate: true });
+	toggleLoader = (isLoading = null) => {
+		this.setState(state => ({
+			isLoading: isLoading !== null ? isLoading : !state.isLoading
+		}));
 	};
 
 	hasMenuChanged = () => {
@@ -74,7 +73,7 @@ class FootballAPI extends Component {
 		isPrams
 	}) => {
 		if (isPrams == true) {
-			await this.showLoader();
+			await this.toggleLoader();
 			await this.hasMenuChanged();
 			await this.setState({
 				isPrams: isPrams
@@ -117,11 +116,11 @@ class FootballAPI extends Component {
 			return { matches: fixture };
 		});
 		console.log("state - matches", this.state.matches);
-		this.hideLoader();
+		this.toggleLoader();
 	};
 
 	render() {
-		if (this.state.circularIndeterminate === true) {
+		if (this.state.isLoading === true) {
 			return (
 				<div className="loader__container">
 					<CircularIndeterminate />
