@@ -4,26 +4,25 @@ import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
 import "./gameCard.css";
 
-export default function GaCard(props) {
+export default function GameCard(props) {
   return (
     <Card className="game-card">
-      <CardContent>
-        <Typography variant="h5" component="h2">
-          {props.homeTeam} - {props.awayTeam}
-        </Typography>
-      </CardContent>
-      {/*      <CardActions 
-      style={{
-        justifyContent: 'center'
-      }}>
-        <Button 
-        size="small"
-        >Learn More</Button>
-      </CardActions>
-*/}{" "}
+      <span className="time-box">{props.time}</span>
+      <div className="div-name">
+        <h4 className="names-home">
+          {props.homeTeam}
+        </h4>
+      </div>
+      <div className="emblems">
+        <img src={props.emblemHomeTeam} alt="emblem" height="40px" />
+        <span className="line"> - </span>
+        <img src={props.emblemAwayTeam} alt="emblem" height="40px" />
+      </div>
+      <h4 className="names">
+        {props.awayTeam}
+      </h4>
     </Card>
   );
 }

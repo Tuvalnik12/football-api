@@ -3,7 +3,10 @@ import GameCard from "./gameCard";
 
 const CardList = ({ matches }) => {
 	return (
-		<div >
+		<div style={{
+			display: 'flex',
+			flexDirection: 'column'
+		}}>
 			{matches.map((match, i) => {
 				return (
 					<GameCard
@@ -11,6 +14,9 @@ const CardList = ({ matches }) => {
 						group={matches[i].match.group}
 						homeTeam={matches[i].match.homeTeam.name}
 						awayTeam={matches[i].match.awayTeam.name}
+						time={matches[i].match.timeDate.time}
+						emblemHomeTeam={matches[i].match.homeTeamUrl.emblemUrl}
+						emblemAwayTeam={matches[i].match.awayTeamUrl.emblemUrl}
 					/>
 				);
 			})}

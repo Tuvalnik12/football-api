@@ -6,7 +6,6 @@ import CurrentChoice from "./currentchoice/CurrentChoice";
 import "./gameDisplayContainer.css";
 
 export default function gameDisplayContainer({
-  alert,
   hasMenuChanged,
   matches,
   league,
@@ -15,7 +14,7 @@ export default function gameDisplayContainer({
   area
 }) {
   //console.log('hasMenuChanged', {hasMenuChanged})
-  if (hasMenuChanged == true) {
+  if (hasMenuChanged === true) {
     return (
       <Container fluid className="game-display__container">
         <CssBaseline />
@@ -23,7 +22,8 @@ export default function gameDisplayContainer({
         <CardList matches={matches} />
       </Container>
     );
-  } else {
+  }
+  {
     return <div></div>;
   }
 }

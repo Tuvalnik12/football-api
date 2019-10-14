@@ -1,6 +1,35 @@
 .game-card {
+	display: flex;
+	flex-direction: row;
 	margin: 1%;
 	padding: 1em;
-	justify-content: center;
+	justify-content: space-between;
 	text-align: center;
+	align-content: center;
+}
+.time-box {
+	align-self: center;
+	margin-right: 1em;
+	padding: 0.7em;
+	background-color: #51a45f;
+	color: white;
+	border-radius: 2em;
+}
+.div-name {
+	display: flex;
+}
+.name-home {
+	justify-content: flex-start;
+}
+.emblems {
+	/*position: static;*/
+	display: flex; 
+	align-items: center;
+	justify-content: center;
+	flex-grow: 1;
+}
+.line {
+	font-size: 2em;
+	margin-right: .8em;
+	margin-left: .8em;
 }

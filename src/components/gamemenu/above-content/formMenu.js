@@ -33,8 +33,7 @@ export default function DialogSelect({
       competitionId: event.target.value.id,
       area: event.target.value.area
     });
-    console.log("event", event.target);
-    console.log("renen", state.league);
+    //console.log("event", event.target);
   };
 
   const handleChangeFixture = event => {
@@ -117,7 +116,7 @@ export default function DialogSelect({
                 <MenuItem value={7}>7</MenuItem>
                 <MenuItem value={8}>8</MenuItem>
                 <MenuItem value={9}>9</MenuItem>
-                <MenuItem value={10}>10</MenuItem>
+                <MenuItem value={25}>25</MenuItem>
               </Select>
             </FormControl>
           </form>

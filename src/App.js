@@ -24,3 +24,8 @@ export default App;
 /* problems:
   1. league not shown when chosen on formMenu.
   2. fixture function - amount of fixtures to each competition.*/
+
+  /*ideas:
+  1. two pages - 1. matches 2. standings
+  2. how to make two pages the right way - server? 
+  */
