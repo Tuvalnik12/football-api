@@ -3,10 +3,7 @@ import GameCard from "./gameCard";
 
 const CardList = ({ matches }) => {
 	return (
-		<div style={{
-			display: 'flex',
-			flexDirection: 'column'
-		}}>
+		<div>
 			{matches.map((match, i) => {
 				return (
 					<GameCard

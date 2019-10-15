@@ -11,18 +11,16 @@ export default function GameCard(props) {
     <Card className="game-card">
       <span className="time-box">{props.time}</span>
       <div className="div-name">
-        <h4 className="names-home">
-          {props.homeTeam}
-        </h4>
+        <h4 className="names">{props.homeTeam}</h4>
       </div>
       <div className="emblems">
         <img src={props.emblemHomeTeam} alt="emblem" height="40px" />
         <span className="line"> - </span>
         <img src={props.emblemAwayTeam} alt="emblem" height="40px" />
       </div>
-      <h4 className="names">
-        {props.awayTeam}
-      </h4>
+      <div className="div-name">
+        <h4 className="names">{props.awayTeam}</h4>
+      </div>
     </Card>
   );
 }

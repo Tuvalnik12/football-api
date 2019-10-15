@@ -65,13 +65,17 @@ class FootballAPI extends Component {
 				rawCompetitions[0].data.competitions[i].plan === "TIER_ONE" &&
 				rawCompetitions[0].data.competitions[i].id !== 2018 &&
 				rawCompetitions[0].data.competitions[i].id !== 2000 &&
-				rawCompetitions[0].data.competitions[i].id !== 2013
+				rawCompetitions[0].data.competitions[i].id !== 2013 &&
+				rawCompetitions[0].data.competitions[i].id !== 2016 &&
+				rawCompetitions[0].data.competitions[i].id !== 2015 &&
+				rawCompetitions[0].data.competitions[i].id !== 2003 &&
+				rawCompetitions[0].data.competitions[i].id !== 2017
 			) {
 				competitions.push(competition);
 			}
 		});
 		this.setState({ competitions: competitions });
-		//console.log(competitions);
+		console.log(competitions);
 		const err = await (err => console.log(err, "err"));
 		await this.toggleLoader();
 	}
@@ -170,6 +174,18 @@ class FootballAPI extends Component {
 			const array = [];
 			subArray.map((team, i) => {
 				if (team) {
+					if (team.id === 521) {
+						team.crestUrl =
+							"https://vignette.wikia.nocookie.net/logopedia/images/c/c1/Lille_OSC_2018.png/revision/latest?cb=20180626135202";
+					}
+					if (team.id === 82) {
+						team.crestUrl =
+							"https://vignette.wikia.nocookie.net/logopedia/images/e/ea/Getafe.png/revision/latest?cb=20161112021848";
+					}
+					if (team.id === 745) {
+						team.crestUrl =
+							"https://vignette.wikia.nocookie.net/logopedia/images/1/1f/Legan%C3%A9s.jpg/revision/latest?cb=20161111231421";
+					}
 					const obj = {};
 					obj.id = team.id;
 					obj.url = team.crestUrl;
@@ -183,7 +199,6 @@ class FootballAPI extends Component {
 		await idUrlArray.map(subArray => {
 			subArray.map((team, i) => {
 				if (team) {
-					console.log("team", team);
 					matches.map((match, i) => {
 						if (matches[i].match.awayTeam.id === team.id) {
 							let awayTeamUrl = Object.assign({}, this.state);

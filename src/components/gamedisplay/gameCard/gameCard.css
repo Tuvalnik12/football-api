@@ -1,35 +1,63 @@
-.game-card {
-	display: flex;
-	flex-direction: row;
-	margin: 1%;
-	padding: 1em;
-	justify-content: space-between;
-	text-align: center;
-	align-content: center;
+@media (min-width: 770px) {
+	.game-card {
+		display: grid;
+		grid-template-columns: 10% 30% 30% 30%;
+		margin: 1%;
+		padding: 1em;
+		text-align: center;
+	}
+	.time-box {
+		align-self: center;
+		margin-right: 1em;
+		border-radius: 2em;
+		padding: 0.7em;
+		background-color: #51a45f;
+		color: white;
+	}
+	.emblems {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.line {
+		margin-right: 0.8em;
+		margin-left: 0.8em;
+		font-size: 2em;
+	}
 }
-.time-box {
-	align-self: center;
-	margin-right: 1em;
-	padding: 0.7em;
-	background-color: #51a45f;
-	color: white;
-	border-radius: 2em;
-}
-.div-name {
-	display: flex;
-}
-.name-home {
-	justify-content: flex-start;
-}
-.emblems {
-	/*position: static;*/
-	display: flex; 
-	align-items: center;
-	justify-content: center;
-	flex-grow: 1;
-}
-.line {
-	font-size: 2em;
-	margin-right: .8em;
-	margin-left: .8em;
+
+@media (max-width: 770px) {
+	.game-card {
+		display: grid;
+		grid-template-columns: 20% 10% 70%;
+		grid-template-rows: 50% 50%;
+		margin: 1%;
+		padding: 1em;
+		text-align: center;
+	}
+	.time-box {
+		grid-row-start: 1;
+		grid-row-end: 3;
+		align-self: center;
+		margin-right: 1em;
+		border-radius: 2em;
+		padding: 0.7em;
+		background-color: #51a45f;
+		color: white;
+	}
+	.emblems {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		grid-row-start: 1;
+		grid-row-end: 3;
+	}
+	.div-name {
+		justify-self: start;
+		margin-left: 1em;
+	}
+	.line {
+		color: white;
+		width: 0px;
+	}
 }
