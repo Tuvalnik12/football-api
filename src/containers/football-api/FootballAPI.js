@@ -1,13 +1,14 @@
 import React, { Component } from "react";
+
+import "./FootballAPI.css";
+import football from '../../lib/football';
 import GameMenuContainer from "../../components/gamemenu/gameMenuContainer";
 import GameDisplayContainer from "../../components/gamedisplay/gameDisplayContainer";
 import CircularIndeterminate from "../../components/loader/loader";
 import CompetitionTable from "../../components/table/table";
-import Container from "@material-ui/core/Container";
-import "./FootballAPI.css";
+
 
 class FootballAPI extends Component {
-	BASE_URL = "http://api.football-data.org/v2";
 	state = {
 		competitions: [],
 		league: "",
@@ -29,7 +30,19 @@ class FootballAPI extends Component {
 	};
 
 	componentDidMount() {
-		this.getCompetiotionsRaw();
+		this.getInitialData();
+	}
+
+	async getInitialData() {
+		await this.toggleLoader();
+		
+		const competitions = await football.getCompetitions();
+
+		this.setState({
+			competitions
+		}, () => {
+			this.toggleLoader();
+		})
 	}
 
 	async getStandings() {
@@ -39,7 +52,6 @@ class FootballAPI extends Component {
 			{
 				method: "get",
 				headers: {
-					"Content-Type": "application/json",
 					"X-Auth-Token": "8cd109a7cd8a4fd599ae76de90536c6a"
 				}
 			}
@@ -65,7 +77,6 @@ class FootballAPI extends Component {
 			{
 				method: "get",
 				headers: {
-					"Content-Type": "application/json",
 					"X-Auth-Token": "8cd109a7cd8a4fd599ae76de90536c6a"
 				}
 			}
@@ -128,7 +139,6 @@ class FootballAPI extends Component {
 			{
 				method: "get",
 				headers: {
-					"Content-Type": "application/json",
 					"X-Auth-Token": "8cd109a7cd8a4fd599ae76de90536c6a"
 				}
 			}
@@ -151,7 +161,6 @@ class FootballAPI extends Component {
 			{
 				method: "get",
 				headers: {
-					"Content-Type": "application/json",
 					"X-Auth-Token": "8cd109a7cd8a4fd599ae76de90536c6a"
 				}
 			}
