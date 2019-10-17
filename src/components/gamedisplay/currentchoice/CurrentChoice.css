@@ -1,9 +1,15 @@
 .current-choice__container {
 	display: flex;
 	justify-content: center;
+	align-self: flex-start;
+	order: 0;
 }
 
-.current-choice__title {
-	padding: 1em;
-    margin: 2%;
+.button__league.button__league {
+	border: 0.5px solid blue;
+	margin-right: 1em;
+}
+.button__fixture.button__fixture {
+	border: 0.5px solid blue;
+	margin-right: 1em;
 }

@@ -4,3 +4,6 @@
 	position: relative;
 	min-height: 100vh;
 }
+.home__container {
+	max-height: 80%;
+}

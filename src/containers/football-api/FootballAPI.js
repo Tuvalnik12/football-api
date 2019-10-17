@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import GameMenuContainer from "../components/gamemenu/gameMenuContainer";
-import GameDisplayContainer from "../components/gamedisplay/gameDisplayContainer";
-import CircularIndeterminate from "../components/loader/loader";
+import GameMenuContainer from "../../components/gamemenu/gameMenuContainer";
+import GameDisplayContainer from "../../components/gamedisplay/gameDisplayContainer";
+import CircularIndeterminate from "../../components/loader/loader";
+import CompetitionTable from "../../components/table/table";
 import Container from "@material-ui/core/Container";
 import "./FootballAPI.css";
 
@@ -21,17 +22,20 @@ class FootballAPI extends Component {
 		isPrams: true,
 		alert: alert,
 		didGetCompititionFixture: false,
-		didGetTeams: false
+		didGetTeams: false,
+		competitionStandings: [],
+		didStandings: false,
+		route: "menu"
 	};
 
 	componentDidMount() {
 		this.getCompetiotionsRaw();
-		//this.getStandings();
 	}
 
-	/*async getStandings() {
+	async getStandings() {
+		const tables = []
 		const request = await fetch(
-			"http://api.football-data.org/v2/competitions/2021/standings",
+			`http://api.football-data.org/v2/competitions/${this.state.competitionId}/standings?standingType=TOTAL`,
 			{
 				method: "get",
 				headers: {
@@ -41,8 +45,16 @@ class FootballAPI extends Component {
 			}
 		);
 		const data = await request.json();
-		//console.log("table", data.standings[0].table);
-	}*/
+		console.log("number 6", data);
+		data.standings[0].table.map((table, i) => {
+			tables.push(table)
+		})
+		this.setState({
+			competitionStandings: tables,
+			didStandings: true
+		});
+		console.log("competitionStandings", this.state.competitionStandings);
+	}
 
 	async getCompetiotionsRaw() {
 		const rawCompetitions = [];
@@ -87,7 +99,7 @@ class FootballAPI extends Component {
 		area,
 		isPrams
 	}) => {
-		if (isPrams == true) {
+		if (isPrams === true) {
 			await this.toggleLoader();
 			await this.hasMenuChanged();
 			await this.setState({
@@ -102,6 +114,7 @@ class FootballAPI extends Component {
 				didGetTeams: false
 			});
 			await this.getCompititionFixtures();
+			await this.getStandings();
 			await this.getCompetitionTeams();
 		} else {
 			return alert("You shall not pass! please fill the form!");
@@ -144,7 +157,7 @@ class FootballAPI extends Component {
 			}
 		);
 		const data = await request.json();
-		//console.log("data", data);
+		//console.log("helooooo", data);
 		allMatches.push(data);
 		await allMatches[0].matches.map((match, i) => {
 			if (match.matchday === this.state.fixture) {
@@ -240,7 +253,7 @@ class FootballAPI extends Component {
 			const month = String(mounthMinusOne + one);
 			const date = day + "." + month;
 			if (time === "2:00") {
-				time = null;
+				time = "17:00";
 				hasTimeScheduled = false;
 			}
 			let newTimeDate = Object.assign({}, this.state);
@@ -274,6 +287,10 @@ class FootballAPI extends Component {
 		this.setState({ hasMenuChanged: true });
 	};
 
+	onRouteChange = event => {
+		this.setState({ route: event.target.value });
+	};
+
 	render() {
 		if (this.state.isLoading === true) {
 			return (
@@ -282,7 +299,7 @@ class FootballAPI extends Component {
 				</div>
 			);
 		}
-		{
+		if (this.state.route === "menu") {
 			return (
 				<div className="body__container">
 					<GameMenuContainer
@@ -299,6 +316,16 @@ class FootballAPI extends Component {
 						area={this.state.area}
 						times={this.state.times}
 						dates={this.state.dates}
+						didStandings={this.state.didStandings}
+						competitionStandings={this.state.competitionStandings}
+						onRouteChange={this.onRouteChange}
+					/>
+					<CompetitionTable
+						competitionStandings={this.state.competitionStandings}
+						route={this.state.route}
+						onRouteChange={this.onRouteChange}
+						hasMenuChanged={this.state.hasMenuChanged}
+						didStandings={this.state.didStandings}
 					/>
 				</div>
 			);

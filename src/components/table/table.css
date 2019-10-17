@@ -1,0 +1,7 @@
+.table__container {
+	display: flex;
+	flex-direction: column;
+}
+.button__back-to {
+	align-self: center;
+}

@@ -10,7 +10,7 @@ export default function GameCard(props) {
   return (
     <Card className="game-card">
       <span className="time-box">{props.time}</span>
-      <div className="div-name">
+      <div className="div-name-home">
         <h4 className="names">{props.homeTeam}</h4>
       </div>
       <div className="emblems">
@@ -18,7 +18,7 @@ export default function GameCard(props) {
         <span className="line"> - </span>
         <img src={props.emblemAwayTeam} alt="emblem" height="40px" />
       </div>
-      <div className="div-name">
+      <div className="div-name-away">
         <h4 className="names">{props.awayTeam}</h4>
       </div>
     </Card>

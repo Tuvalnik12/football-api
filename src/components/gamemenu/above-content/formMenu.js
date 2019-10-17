@@ -12,18 +12,18 @@ import Select from "@material-ui/core/Select";
 import { useAlert } from "react-alert";
 import "./formMenu.css";
 
-export default function DialogSelect({
-  handleNoEntry,
-  competitions,
-  handleMenuChanges
-}) {
+export default function DialogSelect(
+  { handleNoEntry, competitions, handleMenuChanges },
+  props
+) {
   const [state, setState] = React.useState({
     open: false,
     league: "",
     fixtureAmount: 0,
-    fixture: "",
+    fixture: "123",
     competitionId: 0,
-    area: ""
+    area: "",
+    competitions: { competitions }
   });
 
   const handleChangeLeague = event => {
@@ -113,10 +113,7 @@ export default function DialogSelect({
                 <MenuItem value={4}>4</MenuItem>
                 <MenuItem value={5}>5</MenuItem>
                 <MenuItem value={6}>6</MenuItem>
-                <MenuItem value={7}>7</MenuItem>
-                <MenuItem value={8}>8</MenuItem>
-                <MenuItem value={9}>9</MenuItem>
-                <MenuItem value={25}>25</MenuItem>
+                <MenuItem value={25}>25</MenuItem>                
               </Select>
             </FormControl>
           </form>
