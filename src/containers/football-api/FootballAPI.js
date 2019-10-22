@@ -1,4 +1,9 @@
 import React, { Component } from "react";
+
+import initialDataModule from "../../lib/initialDataModule";
+import standingsModule from "../../lib/standingsModule";
+import competitionTeamsModule from "../../lib/competitionTeamsModule";
+import compititionFixturesModule from "../../lib/compititionFixturesModule";
 import GameMenuContainer from "../../components/gamemenu/gameMenuContainer";
 import GameDisplayContainer from "../../components/gamedisplay/gameDisplayContainer";
 import CircularIndeterminate from "../../components/loader/loader";
@@ -29,67 +34,22 @@ class FootballAPI extends Component {
 	};
 
 	componentDidMount() {
-		this.getCompetiotionsRaw();
+		this.getInitialData();
 	}
 
-	async getStandings() {
-		const tables = []
-		const request = await fetch(
-			`http://api.football-data.org/v2/competitions/${this.state.competitionId}/standings?standingType=TOTAL`,
-			{
-				method: "get",
-				headers: {
-					"Content-Type": "application/json",
-					"X-Auth-Token": "8cd109a7cd8a4fd599ae76de90536c6a"
-				}
-			}
-		);
-		const data = await request.json();
-		console.log("number 6", data);
-		data.standings[0].table.map((table, i) => {
-			tables.push(table)
-		})
-		this.setState({
-			competitionStandings: tables,
-			didStandings: true
-		});
-		console.log("competitionStandings", this.state.competitionStandings);
-	}
+	async getInitialData() {
+		await this.toggleLoader();
 
-	async getCompetiotionsRaw() {
-		const rawCompetitions = [];
-		const competitions = [];
-		await this.toggleLoader();
-		const request = await fetch(
-			"http://api.football-data.org/v2/competitions",
+		const competitions = await initialDataModule.getCompetitions();
+
+		this.setState(
 			{
-				method: "get",
-				headers: {
-					"Content-Type": "application/json",
-					"X-Auth-Token": "8cd109a7cd8a4fd599ae76de90536c6a"
-				}
+				competitions
+			},
+			() => {
+				this.toggleLoader();
 			}
 		);
-		const data = await request.json();
-		rawCompetitions.push({ data });
-		await rawCompetitions[0].data.competitions.map((competition, i) => {
-			if (
-				rawCompetitions[0].data.competitions[i].plan === "TIER_ONE" &&
-				rawCompetitions[0].data.competitions[i].id !== 2018 &&
-				rawCompetitions[0].data.competitions[i].id !== 2000 &&
-				rawCompetitions[0].data.competitions[i].id !== 2013 &&
-				rawCompetitions[0].data.competitions[i].id !== 2016 &&
-				rawCompetitions[0].data.competitions[i].id !== 2015 &&
-				rawCompetitions[0].data.competitions[i].id !== 2003 &&
-				rawCompetitions[0].data.competitions[i].id !== 2017
-			) {
-				competitions.push(competition);
-			}
-		});
-		this.setState({ competitions: competitions });
-		console.log(competitions);
-		const err = await (err => console.log(err, "err"));
-		await this.toggleLoader();
 	}
 
 	handleMenuChanges = async ({
@@ -113,115 +73,98 @@ class FootballAPI extends Component {
 				didGetCompititionFixture: false,
 				didGetTeams: false
 			});
-			await this.getCompititionFixtures();
 			await this.getStandings();
 			await this.getCompetitionTeams();
+			await this.getCompititionFixtures();
 		} else {
 			return alert("You shall not pass! please fill the form!");
 		}
 	};
 
-	async getCompetitionTeams() {
-		const competitionTeams = [];
-		const request = await fetch(
-			`http://api.football-data.org/v2/competitions/${this.state.competitionId}/teams`,
-			{
-				method: "get",
-				headers: {
-					"Content-Type": "application/json",
-					"X-Auth-Token": "8cd109a7cd8a4fd599ae76de90536c6a"
-				}
-			}
+	async getStandings() {
+		const competitionStandings = await standingsModule.getTable(
+			this.state.competitionId
 		);
-		const data = await request.json();
-		//console.log("data", data);
-		competitionTeams.push(data.teams);
-		this.setState(() => {
-			return { competitionTeams: competitionTeams, didGetTeams: true };
+		this.setState({
+			competitionStandings,
+			didStandings: true
 		});
-		await this.turnOnPairTeams();
-		//await console.log("teams", competitionTeams);
+		console.log('competitionStandings', this.state.competitionStandings);
 	}
 
-	getCompititionFixtures = async () => {
-		let allMatches = [];
-		let fixture = [];
-		const request = await fetch(
-			`http://api.football-data.org/v2/competitions/${this.state.competitionId}/matches`,
-			{
-				method: "get",
-				headers: {
-					"Content-Type": "application/json",
-					"X-Auth-Token": "8cd109a7cd8a4fd599ae76de90536c6a"
-				}
-			}
+	async getCompetitionTeams() {
+		const competitionTeams = await competitionTeamsModule.getSelectedTeams(
+			this.state.competitionId
 		);
-		const data = await request.json();
-		//console.log("helooooo", data);
-		allMatches.push(data);
-		await allMatches[0].matches.map((match, i) => {
-			if (match.matchday === this.state.fixture) {
-				fixture.push({ match });
-			}
+		this.setState({
+			competitionTeams,
+			didGetTeams: true
 		});
-		const err = await (error => console.log("oh no!"));
-		await this.setState(() => {
-			return { matches: fixture, didGetCompititionFixture: true };
+		//console.log(competitionTeams);
+		await this.turnOnPairTeams();
+	}
+
+	async getCompititionFixtures() {
+		const matches = await compititionFixturesModule.getFixture(
+			this.state.competitionId,
+			this.state.fixture
+		);
+		this.setState({
+			matches,
+			didGetCompititionFixture: true
 		});
-		//await console.log("matches-getMatches", this.state.matches);
+		//await console.log("state-matches", this.state.matches);
 		await this.getTimeAndDate();
 		await this.turnOnPairTeams();
-	};
+	}
 
 	pairTeamsEmblem = async () => {
 		const { matches, competitionTeams } = this.state;
 		const teamsIdArray = [];
 		const idUrlArray = [];
 		//console.log("matches 1", matches);
-		console.log("teams", competitionTeams);
+		//console.log("teams", competitionTeams);
 		/*await matches.map((match, i) => {
 			teamsIdArray.push(matches[i].match.awayTeam.id);
 			teamsIdArray.push(matches[i].match.homeTeam.id);
 		});*/
-		await competitionTeams.map((subArray, i) => {
+		await competitionTeams.map((team, i) => {
 			const array = [];
-			subArray.map((team, i) => {
-				if (team) {
-					if (team.id === 521) {
-						team.crestUrl =
-							"https://vignette.wikia.nocookie.net/logopedia/images/c/c1/Lille_OSC_2018.png/revision/latest?cb=20180626135202";
-					}
-					if (team.id === 82) {
-						team.crestUrl =
-							"https://vignette.wikia.nocookie.net/logopedia/images/e/ea/Getafe.png/revision/latest?cb=20161112021848";
-					}
-					if (team.id === 745) {
-						team.crestUrl =
-							"https://vignette.wikia.nocookie.net/logopedia/images/1/1f/Legan%C3%A9s.jpg/revision/latest?cb=20161111231421";
-					}
-					const obj = {};
-					obj.id = team.id;
-					obj.url = team.crestUrl;
-					array.push(obj);
-					//console.log("obj", obj);
+			if (team) {
+				if (team.id === 521) {
+					team.crestUrl =
+						"https://vignette.wikia.nocookie.net/logopedia/images/c/c1/Lille_OSC_2018.png/revision/latest?cb=20180626135202";
 				}
-			});
+				if (team.id === 82) {
+					team.crestUrl =
+						"https://vignette.wikia.nocookie.net/logopedia/images/e/ea/Getafe.png/revision/latest?cb=20161112021848";
+				}
+				if (team.id === 745) {
+					team.crestUrl =
+						"https://vignette.wikia.nocookie.net/logopedia/images/1/1f/Legan%C3%A9s.jpg/revision/latest?cb=20161111231421";
+				}
+				const obj = {};
+				obj.id = team.id;
+				obj.url = team.crestUrl;
+				array.push(obj);
+				//console.log("obj", obj);
+			}
 			idUrlArray.push(array);
 		});
-		await console.log("idUrlArray", idUrlArray);
+		//await console.log("idUrlArray", idUrlArray);
 		await idUrlArray.map(subArray => {
 			subArray.map((team, i) => {
 				if (team) {
 					matches.map((match, i) => {
-						if (matches[i].match.awayTeam.id === team.id) {
+						if (matches[i].awayTeam.id === team.id) {
 							let awayTeamUrl = Object.assign({}, this.state);
-							awayTeamUrl.matches[i].match.awayTeamUrl = {
+							awayTeamUrl.matches[i].awayTeamUrl = {
 								emblemUrl: team.url
 							};
 							this.setState(awayTeamUrl);
-						} else if (matches[i].match.homeTeam.id === team.id) {
+						} else if (matches[i].homeTeam.id === team.id) {
 							let homeTeamUrl = Object.assign({}, this.state);
-							homeTeamUrl.matches[i].match.homeTeamUrl = {
+							homeTeamUrl.matches[i].homeTeamUrl = {
 								emblemUrl: team.url
 							};
 							this.setState(homeTeamUrl);
@@ -230,7 +173,7 @@ class FootballAPI extends Component {
 				}
 			});
 		});
-		console.log("matches 2", matches);
+		//console.log("matches 2", matches);
 		await this.toggleLoader();
 	};
 	getTimeAndDate = async () => {
@@ -238,7 +181,7 @@ class FootballAPI extends Component {
 		const { matches } = this.state;
 		const numberOfMatches = matches.length;
 		for (let i = 0; i < numberOfMatches; i++) {
-			const rawUtc = matches[i].match.utcDate;
+			const rawUtc = matches[i].utcDate;
 			const newDate = new Date(rawUtc);
 			let minute = String(newDate.getMinutes());
 			const hour = String(newDate.getHours());
@@ -257,7 +200,7 @@ class FootballAPI extends Component {
 				hasTimeScheduled = false;
 			}
 			let newTimeDate = Object.assign({}, this.state);
-			newTimeDate.matches[i].match.timeDate = {
+			newTimeDate.matches[i].timeDate = {
 				time: time,
 				date: date
 			};

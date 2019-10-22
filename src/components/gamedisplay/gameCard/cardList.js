@@ -8,12 +8,12 @@ const CardList = ({ matches }) => {
 				return (
 					<GameCard
 						key={i}
-						group={matches[i].match.group}
-						homeTeam={matches[i].match.homeTeam.name}
-						awayTeam={matches[i].match.awayTeam.name}
-						time={matches[i].match.timeDate.time}
-						emblemHomeTeam={matches[i].match.homeTeamUrl.emblemUrl}
-						emblemAwayTeam={matches[i].match.awayTeamUrl.emblemUrl}
+						group={matches[i].group}
+						homeTeam={matches[i].homeTeam.name}
+						awayTeam={matches[i].awayTeam.name}
+						time={matches[i].timeDate.time}
+						emblemHomeTeam={matches[i].homeTeamUrl.emblemUrl}
+						emblemAwayTeam={matches[i].awayTeamUrl.emblemUrl}
 					/>
 				);
 			})}

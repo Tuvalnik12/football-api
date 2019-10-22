@@ -13,8 +13,8 @@ const App = () => {
   });
   const alert = useAlert();
   const onRouteChange = event => {
-     setState({ ...state, route: event.target.value });
-  }
+    setState({ ...state, route: event.target.value });
+  };
   return (
     <div className="app">
       <HideAppBar />
@@ -23,7 +23,7 @@ const App = () => {
           <Home onRouteChange={onRouteChange} />
         </div>
       ) : (
-        <FootballAPI value={alert} route={state.route}/>
+        <FootballAPI value={alert} route={state.route} />
       )}
       <Footer />
     </div>
@@ -31,7 +31,3 @@ const App = () => {
 };
 
 export default App;
-
-/* problems:
-  1. form-menu -> league not shown when chosen on formMenu.
-  2. form-menu -> fixture function - amount of fixtures to each competition.*/

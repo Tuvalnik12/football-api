@@ -115,7 +115,13 @@ export default function CompetitionTable({
 	const [page, setPage] = React.useState(0);
 	const [rowsPerPage, setRowsPerPage] = React.useState(20);
 
+	if (competitionStandings === null) {
+		return null;
+	}
 	const rows = competitionStandings.map((row, i) => {
+		if (competitionStandings === null) {
+			return null;
+		}
 		return createData(
 			row.position,
 			row.team.crestUrl,

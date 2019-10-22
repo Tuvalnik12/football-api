@@ -112,8 +112,7 @@ export default function DialogSelect(
                 <MenuItem value={3}>3</MenuItem>
                 <MenuItem value={4}>4</MenuItem>
                 <MenuItem value={5}>5</MenuItem>
-                <MenuItem value={6}>6</MenuItem>
-                <MenuItem value={25}>25</MenuItem>                
+                <MenuItem value={6}>6</MenuItem>                
               </Select>
             </FormControl>
           </form>
