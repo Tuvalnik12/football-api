@@ -1,6 +1,6 @@
 class API {
     constructor() {
-	    this.BASE_URL = "http://api.football-data.org/v2";
+	    this.BASE_URL = "https://api.football-data.org/v2";
     }
 
     async sendRequest(method, url, data, headers) {

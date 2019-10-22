@@ -5,7 +5,7 @@ export async function getTable(competitionId) {
     try {
       const request = await api.sendRequest(
         "get",
-        `http://api.football-data.org/v2/competitions/${competitionId}/standings?standingType=TOTAL`
+        `https://api.football-data.org/v2/competitions/${competitionId}/standings?standingType=TOTAL`
       );
 
       if (!request) {

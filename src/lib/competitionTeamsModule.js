@@ -4,7 +4,7 @@ export async function getSelectedTeams(competitionId) {
   try {
     const request = await api.sendRequest(
       "get",
-      `http://api.football-data.org/v2/competitions/${competitionId}/teams`
+      `https://api.football-data.org/v2/competitions/${competitionId}/teams`
     );
 
     if (!request) {

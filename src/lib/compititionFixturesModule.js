@@ -4,7 +4,7 @@ export async function getFixture(competitionId, fixture) {
   try {
     const request = await api.sendRequest(
       "get",
-      `http://api.football-data.org/v2/competitions/${competitionId}/matches?matchday=${fixture}`
+      `https://api.football-data.org/v2/competitions/${competitionId}/matches?matchday=${fixture}`
     );
 
     if (!request) {

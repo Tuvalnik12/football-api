@@ -4,7 +4,7 @@ export async function getCompetitions() {
   try {
     const request = await api.sendRequest(
       "get",
-      "http://api.football-data.org/v2/competitions"
+      "https://api.football-data.org/v2/competitions"
     );
 
     if (!request) {
