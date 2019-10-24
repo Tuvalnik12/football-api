@@ -8,7 +8,6 @@ import GameMenuContainer from "../../components/gamemenu/gameMenuContainer";
 import GameDisplayContainer from "../../components/gamedisplay/gameDisplayContainer";
 import CircularIndeterminate from "../../components/loader/loader";
 import CompetitionTable from "../../components/table/table";
-import Container from "@material-ui/core/Container";
 import "./FootballAPI.css";
 
 class FootballAPI extends Component {
@@ -39,9 +38,7 @@ class FootballAPI extends Component {
 
 	async getInitialData() {
 		await this.toggleLoader();
-
 		const competitions = await initialDataModule.getCompetitions();
-
 		this.setState(
 			{
 				competitions
@@ -89,7 +86,6 @@ class FootballAPI extends Component {
 			competitionStandings,
 			didStandings: true
 		});
-		console.log('competitionStandings', this.state.competitionStandings);
 	}
 
 	async getCompetitionTeams() {
@@ -100,7 +96,6 @@ class FootballAPI extends Component {
 			competitionTeams,
 			didGetTeams: true
 		});
-		//console.log(competitionTeams);
 		await this.turnOnPairTeams();
 	}
 
@@ -113,21 +108,13 @@ class FootballAPI extends Component {
 			matches,
 			didGetCompititionFixture: true
 		});
-		//await console.log("state-matches", this.state.matches);
 		await this.getTimeAndDate();
 		await this.turnOnPairTeams();
 	}
 
 	pairTeamsEmblem = async () => {
 		const { matches, competitionTeams } = this.state;
-		const teamsIdArray = [];
 		const idUrlArray = [];
-		//console.log("matches 1", matches);
-		//console.log("teams", competitionTeams);
-		/*await matches.map((match, i) => {
-			teamsIdArray.push(matches[i].match.awayTeam.id);
-			teamsIdArray.push(matches[i].match.homeTeam.id);
-		});*/
 		await competitionTeams.map((team, i) => {
 			const array = [];
 			if (team) {
@@ -147,11 +134,9 @@ class FootballAPI extends Component {
 				obj.id = team.id;
 				obj.url = team.crestUrl;
 				array.push(obj);
-				//console.log("obj", obj);
 			}
 			idUrlArray.push(array);
 		});
-		//await console.log("idUrlArray", idUrlArray);
 		await idUrlArray.map(subArray => {
 			subArray.map((team, i) => {
 				if (team) {
@@ -173,7 +158,6 @@ class FootballAPI extends Component {
 				}
 			});
 		});
-		//console.log("matches 2", matches);
 		await this.toggleLoader();
 	};
 	getTimeAndDate = async () => {
@@ -189,7 +173,6 @@ class FootballAPI extends Component {
 				minute = "00";
 			}
 			let time = hour + ":" + minute;
-			const dateString = newDate.toDateString();
 			const day = String(newDate.getDate());
 			const mounthMinusOne = newDate.getMonth();
 			const one = 1;
@@ -206,11 +189,9 @@ class FootballAPI extends Component {
 			};
 			this.setState(newTimeDate);
 		}
-
 		if (hasTimeScheduled === false) {
 			alert("Times have yet to be scheduled for this fixture");
 		}
-		//await console.log("matches-after-DateTime", this.state.matches);
 	};
 
 	toggleLoader = (isLoading = null) => {
@@ -263,13 +244,41 @@ class FootballAPI extends Component {
 						competitionStandings={this.state.competitionStandings}
 						onRouteChange={this.onRouteChange}
 					/>
-					<CompetitionTable
-						competitionStandings={this.state.competitionStandings}
-						route={this.state.route}
-						onRouteChange={this.onRouteChange}
-						hasMenuChanged={this.state.hasMenuChanged}
-						didStandings={this.state.didStandings}
-					/>
+					{this.state.competitionStandings.map((table, i) => {
+						if (this.state.competitionStandings.length === 1) {
+							return (
+								<CompetitionTable
+									key={i}
+									group={this.state.league}
+									competitionStandings={table}
+									route={this.state.route}
+									onRouteChange={this.onRouteChange}
+									hasMenuChanged={this.state.hasMenuChanged}
+									didStandings={this.state.didStandings}
+								/>
+							);
+						}
+						if (this.state.competitionStandings.length > 1) {
+							let uclTable = this.state.competitionStandings[i]
+								.table;
+							let spl = this.state.competitionStandings[
+								i
+							].group.split("GROUP_");
+							let coma = "GROUP " + spl;
+							let group = coma.split(",");
+							return (
+								<CompetitionTable
+									key={i}
+									competitionStandings={uclTable}
+									route={this.state.route}
+									group={group}
+									onRouteChange={this.onRouteChange}
+									hasMenuChanged={this.state.hasMenuChanged}
+									didStandings={this.state.didStandings}
+								/>
+							);
+						}
+					})}
 				</div>
 			);
 		}

@@ -13,20 +13,20 @@ export async function getTable(competitionId) {
       }
 
       const data = await request.json();
-      console.log("data-ucl", data);
       if (!data.standings) {
         throw new Error("[standingsModule.getTable] No Table Returned");
       }
-      return null;
+      return data.standings;
     } catch (error) {
-      console.log("error", error);
+      console.log(error);
+      throw new Error("Too many Api calls, only 10 calls per minute.");
     }
   }
 
   try {
     const request = await api.sendRequest(
       "get",
-      `http://api.football-data.org/v2/competitions/${competitionId}/standings?standingType=TOTAL`
+      `https://api.football-data.org/v2/competitions/${competitionId}/standings?standingType=TOTAL`
     );
 
     if (!request) {
@@ -37,9 +37,10 @@ export async function getTable(competitionId) {
     if (!data.standings[0].table) {
       throw new Error("[standingsModule.getTable] No Table Returned");
     }
-    return data.standings[0].table;
+    return Array(data.standings[0].table);
   } catch (error) {
-    console.log("error", error);
+    console.log(error);
+    throw new Error("Too many Api calls, only 10 calls per minute.");
   }
 }
 

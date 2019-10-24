@@ -5,9 +5,8 @@ import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
-import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
-import Button from "@material-ui/core/Button";
+import "./table.css";
 
 const columns = [
 	{ id: "position", label: "Pos", minWidth: 20 },
@@ -91,14 +90,16 @@ function createData(
 
 const useStyles = makeStyles({
 	root: {
-		width: "100%",
+		width: "95%",
 		gridColumn: 2 / 2,
 		gridRowStart: 1,
 		gridRowEnd: 2,
-		alignSelf: "flex-end",
-		order: "1"
+		alignSelf: "center",
+		order: "1",
+		margin: "1em"
 	},
 	tableWrapper: {
+		border: "1px solid black",
 		maxHeight: 440,
 		overflow: "auto"
 	}
@@ -109,7 +110,8 @@ export default function CompetitionTable({
 	route,
 	onRouteChange,
 	hasMenuChanged,
-	didStandings
+	didStandings,
+	group
 }) {
 	const classes = useStyles();
 	const [page, setPage] = React.useState(0);
@@ -136,26 +138,10 @@ export default function CompetitionTable({
 		);
 	});
 
-	const handleChangePage = (event, newPage) => {
-		setPage(newPage);
-	};
-
-	const handleChangeRowsPerPage = event => {
-		setRowsPerPage(+event.target.value);
-		setPage(0);
-	};
 	if (hasMenuChanged && didStandings === true) {
 		return (
 			<div className="table__container">
-				{/*<Button
-					variant="contained"
-					color="primary"
-					className="button__back-to"
-					onClick={onRouteChange}
-					value="menu"
-				>
-					Back To Matches
-				</Button>*/}
+				<h4 className="table__header">{group}</h4>
 				<Paper className={classes.root}>
 					<div className={classes.tableWrapper}>
 						<Table
@@ -163,7 +149,7 @@ export default function CompetitionTable({
 							stickyHeader
 							aria-label="sticky table"
 						>
-							<TableHead>
+							<TableHead className="table-head">
 								<TableRow>
 									{columns.map(column => (
 										<TableCell

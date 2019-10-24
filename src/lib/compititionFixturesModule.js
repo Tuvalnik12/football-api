@@ -19,7 +19,8 @@ export async function getFixture(competitionId, fixture) {
     }
     return data.matches;
   } catch (error) {
-    console.log("error", error);
+    console.log(error)
+    throw new Error("Too many Api calls, only 10 calls per minute.")
   }
 }
 export default {

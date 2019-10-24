@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import HideAppBar from "./components/nav/Nav";
 import Footer from "./components/footer/Footer";
 import FootballAPI from "./containers/football-api/FootballAPI";
@@ -31,3 +31,4 @@ const App = () => {
 };
 
 export default App;
+

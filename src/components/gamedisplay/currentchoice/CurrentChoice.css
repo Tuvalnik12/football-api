@@ -5,11 +5,17 @@
 	order: 0;
 }
 
-.button__league.button__league {
-	border: 0.5px solid blue;
+.title__league {
 	margin-right: 1em;
+	border: 0.5px solid blue;
+	border-radius: 0.5em;
+	padding: 1em;
+	color: #0376dd;
 }
-.button__fixture.button__fixture {
-	border: 0.5px solid blue;
+.title__fixture {
 	margin-right: 1em;
+	border: 0.5px solid blue;
+	border-radius: 0.5em;
+	padding: 1em;
+	color: #0376dd;
 }

@@ -1,18 +1,35 @@
 @media (min-width: 770px) {
 	.game-card {
 		display: grid;
-		grid-template-columns: 10% 30% 30% 30%;
+		grid-template-columns: 15% 10% 25% 25% 25%;
 		margin: 1%;
 		padding: 1em;
 		text-align: center;
 	}
+	.div-name-home {
+		display: flex;
+		justify-content: center;
+	}
+	.div-name-away {
+		display: flex;
+		justify-content: center;
+	}
 	.time-box {
 		align-self: center;
-		margin-right: 1em;
+		margin: 1em;
 		border-radius: 2em;
 		padding: 0.7em;
 		background-color: #51a45f;
 		color: white;
+	}
+	.date-box {
+		align-self: center;
+		justify-self: center;
+		margin: 1em;
+		border: solid 0.5px black;
+		border-radius: 0.3em;
+		padding: 0.7em;
+		width: 60px;
 	}
 	.emblems {
 		display: flex;
@@ -23,6 +40,9 @@
 		margin-right: 0.8em;
 		margin-left: 0.8em;
 		font-size: 2em;
+	}
+	.names {
+		align-self: center;
 	}
 }
 
@@ -36,19 +56,30 @@
 		text-align: center;
 	}
 	.time-box {
-		grid-row-start: 1;
+		grid-row-start: 2;
 		grid-row-end: 3;
 		align-self: center;
-		margin-right: 1em;
+		margin: 0.3em;
 		border-radius: 2em;
 		padding: 0.7em;
 		background-color: #51a45f;
 		color: white;
 	}
+	.date-box {
+		grid-row-start: 1;
+		grid-row-end: 2;
+		align-self: center;
+		justify-self: center;
+		border: solid 0.5px black;
+		border-radius: 0.3em;
+		padding: 0.7em;
+	}
+
 	.emblems {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		justify-content: center;
 		grid-row-start: 1;
 		grid-row-end: 3;
 	}

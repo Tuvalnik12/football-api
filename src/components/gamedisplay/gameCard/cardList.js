@@ -12,6 +12,7 @@ const CardList = ({ matches }) => {
 						homeTeam={matches[i].homeTeam.name}
 						awayTeam={matches[i].awayTeam.name}
 						time={matches[i].timeDate.time}
+						date={matches[i].timeDate.date}
 						emblemHomeTeam={matches[i].homeTeamUrl.emblemUrl}
 						emblemAwayTeam={matches[i].awayTeamUrl.emblemUrl}
 					/>

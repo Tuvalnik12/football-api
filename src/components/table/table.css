@@ -1,7 +1,13 @@
 .table__container {
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
-.button__back-to {
-	align-self: center;
+.table__header.table__header {
+	padding: 0.8em;
+	margin: 0;
+	margin-top: 1em;
+	border: 1px solid black;
+	border-radius: 0.5em;
 }

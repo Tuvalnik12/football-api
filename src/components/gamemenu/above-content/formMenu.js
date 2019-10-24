@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -9,7 +9,6 @@ import Input from "@material-ui/core/Input";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import { useAlert } from "react-alert";
 import "./formMenu.css";
 
 export default function DialogSelect(
@@ -20,20 +19,84 @@ export default function DialogSelect(
     open: false,
     league: "",
     fixtureAmount: 0,
-    fixture: "123",
+    fixture: "",
+    fixtureItems: [],
     competitionId: 0,
     area: "",
-    competitions: { competitions }
+    competitions: { competitions },
+    hasLeagueChanged: false,
+    hasFixtureAmount: false
   });
 
-  const handleChangeLeague = event => {
+  React.useEffect(() => {
+    if (state.hasLeagueChanged === true) {
+      handleFixtureAmount();
+    }
+    if (state.hasFixtureAmount === true) {
+      handleFixtureMenuItem();
+    }
+  });
+
+  const handleFixtureAmount = () => {
+    if (state.competitionId === 2021) {
+      setState({
+        ...state,
+        fixtureAmount: 38,
+        hasLeagueChanged: false,
+        hasFixtureAmount: true
+      });
+    }
+    if (state.competitionId === 2001) {
+      setState({
+        ...state,
+        fixtureAmount: 6,
+        hasLeagueChanged: false,
+        hasFixtureAmount: true
+      });
+    }
+    if (state.competitionId === 2002) {
+      setState({
+        ...state,
+        fixtureAmount: 34,
+        hasLeagueChanged: false,
+        hasFixtureAmount: true
+      });
+    }
+    if (state.competitionId === 2019) {
+      setState({
+        ...state,
+        fixtureAmount: 38,
+        hasLeagueChanged: false,
+        hasFixtureAmount: true
+      });
+    }
+    if (state.competitionId === 2014) {
+      setState({
+        ...state,
+        fixtureAmount: 38,
+        hasLeagueChanged: false,
+        hasFixtureAmount: true
+      });
+    }
+  };
+
+  const handleChangeLeague = name => event => {
     setState({
       ...state,
       league: event.target.value.name,
       competitionId: event.target.value.id,
-      area: event.target.value.area
+      area: event.target.value.area,
+      hasLeagueChanged: true
     });
-    //console.log("event", event.target);
+  };
+
+  const handleFixtureMenuItem = () => {
+    const fixtureArray = [];
+    for (let i = 1; i <= state.fixtureAmount; i++) {
+      let fixture = Number(i);
+      fixtureArray.push(fixture);
+    }
+    setState({ ...state, fixtureItems: fixtureArray, hasFixtureAmount: false });
   };
 
   const handleChangeFixture = event => {
@@ -58,7 +121,6 @@ export default function DialogSelect(
 
   const handleClickOpen = () => {
     setState({ ...state, open: true });
-    // console.log('competitions', competitions)
   };
 
   const handleClose = () => {
@@ -83,7 +145,7 @@ export default function DialogSelect(
               <InputLabel htmlFor="age-simple">League</InputLabel>
               <Select
                 value={state.league}
-                onChange={handleChangeLeague}
+                onChange={handleChangeLeague("league")}
                 input={<Input id="age-native-simple" />}
               >
                 {competitions.map((competition, i) => (
@@ -107,12 +169,11 @@ export default function DialogSelect(
                 onChange={handleChangeFixture}
                 input={<Input id="age-native-simple" />}
               >
-                <MenuItem value={1}>1</MenuItem>
-                <MenuItem value={2}>2</MenuItem>
-                <MenuItem value={3}>3</MenuItem>
-                <MenuItem value={4}>4</MenuItem>
-                <MenuItem value={5}>5</MenuItem>
-                <MenuItem value={6}>6</MenuItem>                
+                {state.fixtureItems.map((fixture, i) => (
+                  <MenuItem key={i} value={i}>
+                    {fixture}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
           </form>

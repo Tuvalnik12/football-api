@@ -3,6 +3,7 @@
 	background-color: #ffaaaa;
 }
 
-.title {
+.title.title {
 	text-align: center;
+	font-family: "Exo", sans-serif;
 }

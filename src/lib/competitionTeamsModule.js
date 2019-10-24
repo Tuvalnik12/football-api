@@ -17,7 +17,8 @@ export async function getSelectedTeams(competitionId) {
     }
     return (data.teams);
   } catch (error) {
-    console.log("error", error);
+    console.log(error)
+    throw new Error("Too many Api calls, only 10 calls per minute.")
   }
 }
 
